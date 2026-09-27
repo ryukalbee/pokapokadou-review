@@ -1,0 +1,300 @@
+<title>ぽかぽか堂 口コミおたすけ</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+<style>
+:root{
+  --paper:#FBF3EC; --card:#FFFDF9; --ink:#2B2320; --ink-soft:#5E524A; --line:#E7D9C8;
+  --kaki:#D9702A; --kaki-deep:#B65A1C; --on-kaki:#FFFFFF; --kaki-tint:#F8E4D2; --kaki-tint-2:#FCEFE3;
+  --ok:#3C7A52; --tag:#F1E6D8; --tag-ink:#6B4A2E;
+  --shadow:0 1px 2px rgba(60,40,20,.06),0 8px 24px rgba(120,80,40,.08);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --paper:#1E1916; --card:#27211D; --ink:#F3E9DE; --ink-soft:#BFB1A3; --line:#3E342D;
+    --kaki:#F08C45; --kaki-deep:#F5A56C; --on-kaki:#1E1916; --kaki-tint:#3A2A1E; --kaki-tint-2:#30251C;
+    --ok:#7FC49A; --tag:#3A2F26; --tag-ink:#E9CFAF;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --paper:#1E1916; --card:#27211D; --ink:#F3E9DE; --ink-soft:#BFB1A3; --line:#3E342D;
+  --kaki:#F08C45; --kaki-deep:#F5A56C; --on-kaki:#1E1916; --kaki-tint:#3A2A1E; --kaki-tint-2:#30251C;
+  --ok:#7FC49A; --tag:#3A2F26; --tag-ink:#E9CFAF;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;font-size:16px;line-height:1.75;-webkit-font-smoothing:antialiased}
+.wrap{max-width:640px;margin:0 auto;padding-inline:20px;padding-block:28px 56px;display:grid;gap:22px}
+h1,h2{font-family:"Shippori Mincho","Hiragino Mincho ProN","Yu Mincho",serif;text-wrap:balance;margin:0;font-weight:700}
+.eyebrow{font-size:12px;letter-spacing:.14em;color:var(--kaki-deep);font-weight:700}
+.hero{display:grid;gap:8px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+.hero h1{font-size:28px;line-height:1.3}
+.hero p{margin:0;color:var(--ink-soft);font-size:15px}
+.step{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 18px 20px;box-shadow:var(--shadow);display:grid;gap:12px}
+.step header{display:flex;align-items:baseline;gap:10px}
+.num{font-family:"Shippori Mincho",serif;font-size:13px;color:var(--kaki-deep);letter-spacing:.08em;white-space:nowrap}
+.step h2{font-size:18px}
+.hint{margin:0;font-size:13.5px;color:var(--ink-soft)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{appearance:none;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:999px;padding:8px 14px;font:inherit;font-size:14.5px;line-height:1.3;cursor:pointer;transition:background .15s,border-color .15s}
+.chip[aria-pressed="true"]{background:var(--kaki-tint);border-color:var(--kaki);font-weight:500}
+.chip:focus-visible,textarea:focus-visible,.btn:focus-visible,a:focus-visible{outline:3px solid var(--kaki);outline-offset:2px}
+textarea{width:100%;font:inherit;font-size:15.5px;line-height:1.7;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:12px 14px;resize:vertical;min-height:96px}
+#draft{min-height:220px;background:var(--card)}
+.out{border-color:var(--kaki);background:linear-gradient(180deg,var(--kaki-tint-2),var(--card) 30%)}
+.actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{appearance:none;font:inherit;font-weight:700;font-size:15px;border-radius:10px;padding:12px 18px;cursor:pointer;border:1px solid transparent;text-decoration:none;display:inline-flex;align-items:center;gap:8px;line-height:1}
+.btn-primary{background:var(--kaki);color:var(--on-kaki)}
+.btn-primary:hover{background:var(--kaki-deep)}
+.btn-ghost{background:transparent;color:var(--kaki-deep);border-color:var(--kaki)}
+.btn-text{background:transparent;color:var(--ink-soft);border-color:var(--line);font-weight:500}
+.status{font-size:13.5px;color:var(--ok);min-height:1.2em}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-size:12px;background:var(--tag);color:var(--tag-ink);border-radius:6px;padding:3px 8px;line-height:1.4}
+.tags-label{font-size:12.5px;color:var(--ink-soft);margin:0}
+.meta{font-size:12.5px;color:var(--ink-soft);line-height:1.6;display:grid;gap:6px}
+.meta p{margin:0}
+details{border-top:1px dashed var(--line);padding-top:14px}
+summary{cursor:pointer;font-weight:700;color:var(--ink-soft);font-size:14px}
+details ul{padding-left:18px;margin:8px 0 0;font-size:14px;color:var(--ink-soft)}
+details li{margin:4px 0}
+.count{font-size:12.5px;color:var(--ink-soft);text-align:right;font-variant-numeric:tabular-nums}
+@media (prefers-reduced-motion: reduce){.chip{transition:none}}
+</style>
+
+<div class="wrap">
+  <section class="hero">
+    <div class="eyebrow">お湯のない温泉｜ぽかぽか堂 五反田本店</div>
+    <h1>今日の施術、<br>どんな時間でしたか。</h1>
+    <p>3つの質問に答えると、口コミの例文ができます。そのまま使っても、書き直しても大丈夫です。</p>
+  </section>
+
+  <section class="step" aria-labelledby="q1">
+    <header><span class="num">一</span><h2 id="q1">今日はどのコースでしたか</h2></header>
+    <div class="chips" id="course" role="group" aria-label="コース">
+      <button type="button" class="chip" data-v="全身ぽかぽか巡りコース(110分)">全身ぽかぽか巡り 110分</button>
+      <button type="button" class="chip" data-v="至福のフルリセットコース(180分)">至福のフルリセット 180分</button>
+      <button type="button" class="chip" data-v="部分集中クイック温熱コース(50分)">部分集中クイック温熱 50分</button>
+    </div>
+    <div class="chips" id="visit" role="group" aria-label="来店回数">
+      <button type="button" class="chip" data-v="first">初めての来店(初回110分 4,900円)</button>
+      <button type="button" class="chip" data-v="repeat">2回目以降</button>
+    </div>
+  </section>
+
+  <section class="step" aria-labelledby="q2">
+    <header><span class="num">二</span><h2 id="q2">来る前、どんなことが気になっていましたか</h2></header>
+    <p class="hint">あてはまるものをいくつでも。</p>
+    <div class="chips" id="worry" role="group" aria-label="悩み・きっかけ">
+      <button type="button" class="chip" data-v="手足がいつもひんやりする冷え">手足の冷え</button>
+      <button type="button" class="chip" data-v="休んでも抜けない疲れ">疲れが抜けない</button>
+      <button type="button" class="chip" data-v="肩や腰の重さ">肩や腰の重さ</button>
+      <button type="button" class="chip" data-v="デスクワークで固まった身体のコリ">デスクワークのコリ</button>
+      <button type="button" class="chip" data-v="足のむくみ">足のむくみ</button>
+      <button type="button" class="chip" data-v="寝つきの悪さ">寝つきが悪い</button>
+    </div>
+    <div class="chips" id="trigger" role="group" aria-label="来店のきっかけ">
+      <button type="button" class="chip" data-v="仕事帰りに寄れる場所を探していて">仕事帰りに寄れる所を探して</button>
+      <button type="button" class="chip" data-v="五反田駅の近くで温活できる店を探していて">五反田駅近くで温活の店を探して</button>
+      <button type="button" class="chip" data-v="「お湯のない温泉」という名前が気になって">「お湯のない温泉」が気になって</button>
+      <button type="button" class="chip" data-v="超音波で温めるケアを試してみたくて">超音波のケアを試したくて</button>
+      <button type="button" class="chip" data-v="知人にすすめられて">知人にすすめられて</button>
+    </div>
+  </section>
+
+  <section class="step" aria-labelledby="q3">
+    <header><span class="num">三</span><h2 id="q3">受けてみて、どうでしたか</h2></header>
+    <p class="hint">いくつでも。多いほど自然な文章になります。</p>
+    <div class="chips" id="feel" role="group" aria-label="体感">
+      <button type="button" class="chip" data-v="身体の芯からじっくり温まりました">身体の芯から温まった</button>
+      <button type="button" class="chip" data-v="血行が良くなって、めぐりが整った感じがしました">血行・めぐりが良くなった感じ</button>
+      <button type="button" class="chip" data-v="手足の先までぽかぽかになりました">手足の先までぽかぽか</button>
+      <button type="button" class="chip" data-v="肩や腰の重さがすっと軽くなりました">肩や腰が軽くなった</button>
+      <button type="button" class="chip" data-v="気持ちよくて途中で眠ってしまいました">途中で眠ってしまった</button>
+      <button type="button" class="chip" data-v="帰り道の足取りが軽かったです">帰り道が軽かった</button>
+      <button type="button" class="chip" data-v="その夜はぐっすり眠れました">その夜ぐっすり眠れた</button>
+      <button type="button" class="chip" data-v="温泉から上がったあとのような温かさが続きました">温泉上がりみたいな温かさが続いた</button>
+      <button type="button" class="chip" data-v="熱くないか何度も声をかけてくれて安心でした">声かけが丁寧で安心</button>
+      <button type="button" class="chip" data-v="施術着が用意されていて手ぶらで行けるのが楽でした">手ぶらで行けて楽</button>
+      <button type="button" class="chip" data-v="金箔の壁と盆栽のある待合スペースが落ち着きました">金箔と盆栽の待合が落ち着く</button>
+      <button type="button" class="chip" data-v="22時まで営業しているので仕事帰りに寄れて助かりました">22時までやっていて助かる</button>
+    </div>
+  </section>
+
+  <section class="step" aria-labelledby="q4">
+    <header><span class="num">四</span><h2 id="q4">ほかに、ひとこと</h2></header>
+    <p class="hint">なくても大丈夫。あれば、あなたの言葉で。</p>
+    <textarea id="free" placeholder="例:担当の方の説明がわかりやすかった、など"></textarea>
+  </section>
+
+  <section class="step out" aria-labelledby="q5">
+    <header><span class="num">結</span><h2 id="q5">口コミの例文</h2></header>
+    <p class="hint">上の答えから組み立てた文章です。自由に直してください。</p>
+    <textarea id="draft" aria-label="口コミの例文"></textarea>
+    <div class="count"><span id="len">0</span> 文字</div>
+    <p class="tags-label">この文に入っている言葉</p>
+    <div class="tags" id="tags"></div>
+    <div class="actions">
+      <button type="button" class="btn btn-primary" id="copy">例文をコピー</button>
+      <button type="button" class="btn btn-text" id="rephrase">別の言い回しにする</button>
+    </div>
+    <div class="actions" id="submit-row" hidden>
+      <button type="button" class="btn btn-ghost" id="submit">回答を送る(お店にだけ届きます)</button>
+      <span class="status" id="submit-status"></span>
+    </div>
+    <div class="actions">
+      <a class="btn btn-ghost" id="gmap" href="https://www.google.com/maps?cid=17709550192882215151" target="_blank" rel="noopener">Google マップで口コミを書く</a>
+      <span class="status" id="status"></span>
+    </div>
+    <div class="meta">
+      <p>Google マップが開いたら「クチコミを書く」を押して、コピーした文章を貼り付けてください。</p>
+      <p>投稿は任意で、特典や割引とは結びついていません。内容はご自身の体験に合わせて自由に変えてください。</p>
+      <p id="consent" hidden>「回答を送る」で送られるのは、選んだ項目と入力した文章だけです。お名前や連絡先は送られません。サービス改善と、同意をいただいた場合のお客様の声掲載に使います。</p>
+    </div>
+  </section>
+
+  <details>
+    <summary>設計メモ(店舗スタッフ用)</summary>
+    <ul>
+      <li>例文は HP(2026-09-25 版)の MEO キーワードを軸に組み立てます。地域: 五反田駅徒歩1分。業態: 冷え専門店、お湯のない温泉、超音波温熱。効用: 身体の芯から温まる、血行・めぐり、冷え、疲れ、肩や腰の重さ。サービス: 全身ぽかぽか巡りコース 110分 初回4,900円、手ぶら OK、22時まで。</li>
+      <li>書き出しと締めは3パターンずつあり、「別の言い回しにする」で切り替わります。初期表示はランダムなので、お客様ごとに文章が変わります。</li>
+      <li>選択が少ないと短い文になります。質問三を多めに選んでもらうよう声かけしてください。</li>
+      <li>Google のリンクは HP と同じ地図リンク(cid 指定)です。開いた先で「クチコミを書く」を押す手順になります。</li>
+      <li>案内は当日店頭でも、翌日の連絡でも使えます。当日なら Wi-Fi ではなくお客様の回線で投稿してもらうのが無難です。</li>
+    </ul>
+  </details>
+</div>
+
+<script>
+(function(){
+  // 回答の保存先(Google Apps Script のウェブアプリ URL)。空なら「回答を送る」は表示されない。
+  var SUBMIT_URL = '';
+  var SOURCE = (location.hash || '').replace('#','') || 'direct';
+  var groups = ['course','visit','worry','trigger','feel'];
+  var single = ['course','visit'];
+  var state = {course:'', visit:'', worry:[], trigger:[], feel:[], free:'', seed:Math.floor(Math.random()*3)};
+  var draft = document.getElementById('draft'), free = document.getElementById('free');
+  var status = document.getElementById('status'), len = document.getElementById('len'), tags = document.getElementById('tags');
+
+  try { var saved = JSON.parse(localStorage.getItem('pokapoka-review') || 'null'); if (saved && typeof saved === 'object') state = Object.assign(state, saved); } catch (e) {}
+  function save(){ try { localStorage.setItem('pokapoka-review', JSON.stringify(state)); } catch (e) {} }
+
+  function restore(){
+    groups.forEach(function(g){
+      Array.prototype.forEach.call(document.getElementById(g).querySelectorAll('.chip'), function(btn){
+        var v = btn.getAttribute('data-v');
+        var on = single.indexOf(g) !== -1 ? state[g] === v : state[g].indexOf(v) !== -1;
+        btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+    });
+    free.value = state.free || '';
+  }
+
+  groups.forEach(function(g){
+    var box = document.getElementById(g);
+    box.addEventListener('click', function(ev){
+      var btn = ev.target.closest('.chip'); if (!btn) return;
+      var v = btn.getAttribute('data-v');
+      if (single.indexOf(g) !== -1) {
+        var was = btn.getAttribute('aria-pressed') === 'true';
+        Array.prototype.forEach.call(box.querySelectorAll('.chip'), function(b){ b.setAttribute('aria-pressed','false'); });
+        state[g] = was ? '' : v; if (!was) btn.setAttribute('aria-pressed','true');
+      } else {
+        var i = state[g].indexOf(v);
+        if (i === -1) { state[g].push(v); btn.setAttribute('aria-pressed','true'); } else { state[g].splice(i,1); btn.setAttribute('aria-pressed','false'); }
+      }
+      compose(); save();
+    });
+  });
+  free.addEventListener('input', function(){ state.free = free.value; compose(); save(); });
+  document.getElementById('rephrase').addEventListener('click', function(){ state.seed = (state.seed + 1) % 3; compose(); save(); });
+
+  function joinJa(arr){ return arr.length <= 1 ? (arr[0] || '') : arr.slice(0,-1).join('、') + '、' + arr[arr.length-1]; }
+  function stem(s){ return s.replace(/(ました|でした|です)$/,''); }
+
+  function compose(){
+    var s = state, v = s.seed;
+    var course = s.course || '超音波の温熱ケア';
+    var worry = joinJa(s.worry), trig = joinJa(s.trigger);
+    var p = [];
+
+    // 書き出し(3パターン)
+    var opens = [
+      (trig ? trig + '、' : '') + '五反田駅から徒歩1分の冷え専門店「お湯のない温泉 ぽかぽか堂」で' + course + 'を受けました。',
+      '五反田の「お湯のない温泉 ぽかぽか堂」へ' + (trig ? '。' + trig + '行ってみました' : '行ってきました') + '。お湯を使わず、超音波で身体を温める冷え専門店で、今回は' + course + 'でした。',
+      (s.visit === 'first' ? '初めて' : '') + '五反田駅近くの冷え専門店「ぽかぽか堂」に行きました。' + (trig ? trig + '選んだお店です。' : '') + course + 'をお願いしました。'
+    ];
+    p.push(opens[v]);
+
+    // 悩み
+    var worries = worry ? [
+      'もともと' + worry + 'が気になっていました。',
+      worry + 'がずっと続いていて、温めるケアを試したいと思っていました。',
+      '普段から' + worry + 'に悩んでいたのですが、'
+    ] : null;
+
+    // 体感(パターン3では悩みの文と最初の体感を一文につなぐ)
+    var f = s.feel.slice(), out = [];
+    if (worries) {
+      if (v === 2) { out.push(worries[2] + (f.length ? f.shift() + '。' : '温めるケアを試してみることにしました。')); }
+      else p.push(worries[v]);
+    }
+    while (f.length) {
+      var a = f.shift(), b = f.length ? f.shift() : null;
+      out.push(b ? stem(a) + '、' + b + '。' : a + '。');
+    }
+    if (out.length) p.push(out.join(''));
+
+    // 自由記入
+    if (s.free && s.free.trim()) p.push(s.free.trim());
+
+    // 締め(3パターン)
+    var closes = [
+      '冷えが気になる方や、仕事帰りに手ぶらで立ち寄りたい方におすすめです。22時まで営業しているのもありがたいです。',
+      (s.visit === 'first' ? '初回は110分4,900円で試せるので、まず一度体験してみる価値があると思います。' : '3週間以内だと特典価格になるので、次もそのペースで通うつもりです。') + '五反田で温活するならここです。',
+      '身体の芯から温まる感覚は、お湯のある温泉とはまた違う心地よさでした。また芯から温まりに行きます。'
+    ];
+    p.push(closes[v]);
+
+    var any = s.course || s.visit || s.worry.length || s.trigger.length || s.feel.length || (s.free && s.free.trim());
+    draft.value = any ? p.join('\n') : '';
+    after();
+  }
+
+  var kw = ['五反田','徒歩1分','冷え専門店','お湯のない温泉','超音波','芯から','血行','めぐり','冷え','疲れ','肩や腰','コリ','むくみ','ぽかぽか','全身ぽかぽか巡りコース','至福のフルリセットコース','部分集中クイック温熱コース','初回','4,900円','手ぶら','22時','温活','仕事帰り'];
+  function after(){
+    len.textContent = draft.value.length;
+    tags.innerHTML = '';
+    kw.forEach(function(k){ if (draft.value.indexOf(k) !== -1) { var t = document.createElement('span'); t.className = 'tag'; t.textContent = k; tags.appendChild(t); } });
+  }
+  draft.addEventListener('input', after);
+
+  document.getElementById('copy').addEventListener('click', function(){
+    var t = draft.value; if (!t) { status.textContent = 'まだ何も選ばれていません。'; return; }
+    var done = function(){ status.textContent = 'コピーしました。Google マップの「クチコミを書く」に貼り付けてください。'; };
+    var fail = function(){ draft.focus(); draft.select(); status.textContent = '選択したので、長押しでコピーしてください。'; };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(done, fail); else fail();
+  });
+
+  var submitRow = document.getElementById('submit-row'), submitBtn = document.getElementById('submit'), submitStatus = document.getElementById('submit-status');
+  if (SUBMIT_URL) { submitRow.hidden = false; document.getElementById('consent').hidden = false; }
+  submitBtn.addEventListener('click', function(){
+    if (!draft.value) { submitStatus.textContent = 'まだ何も選ばれていません。'; return; }
+    var body = new URLSearchParams({
+      source: SOURCE, course: state.course, visit: state.visit === 'first' ? '初回' : (state.visit === 'repeat' ? '2回目以降' : ''),
+      worry: state.worry.join(' / '), trigger: state.trigger.join(' / '), feel: state.feel.join(' / '),
+      free: state.free || '', draft: draft.value
+    });
+    submitBtn.disabled = true; submitStatus.textContent = '送信中…';
+    fetch(SUBMIT_URL, { method:'POST', mode:'no-cors', body: body }).then(function(){
+      submitStatus.textContent = 'ありがとうございます。お店に届きました。';
+    }, function(){
+      submitBtn.disabled = false; submitStatus.textContent = '送れませんでした。電波の良い場所でもう一度お試しください。';
+    });
+  });
+
+  restore(); compose();
+})();
+</script>
