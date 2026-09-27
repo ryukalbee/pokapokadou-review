@@ -1,3 +1,10 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#FBF3EC">
 <title>ぽかぽか堂 口コミおたすけ</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
 <style>
@@ -40,6 +47,7 @@ h2{font-family:"Shippori Mincho","Hiragino Mincho ProN","Yu Mincho",serif;text-w
 .lead{margin:0;color:var(--ink-soft);font-size:15px}
 .hint{margin:0;font-size:14px;color:var(--ink-soft)}
 .label{font-size:13px;letter-spacing:.08em;color:var(--kaki-deep);font-weight:700;margin:6px 0 -6px}
+.label+.hint{margin-top:2px}
 .chips{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .chips.one{grid-template-columns:1fr}
 .chip{appearance:none;border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:14px;min-height:56px;padding:10px 12px 10px 12px;font:inherit;font-size:15.5px;line-height:1.35;cursor:pointer;text-align:left;display:flex;align-items:center;gap:10px;transition:background .15s,border-color .15s;box-shadow:var(--shadow)}
@@ -69,10 +77,12 @@ textarea{width:100%;font:inherit;font-size:16px;line-height:1.7;color:var(--ink)
 @media (prefers-reduced-motion: reduce){.chip{transition:none}}
 </style>
 
+</head>
+<body>
 <div class="app">
   <header class="top">
     <div class="eyebrow">お湯のない温泉｜ぽかぽか堂 五反田本店</div>
-    <div class="prog" id="prog"><i></i><i></i><i></i><i></i><i></i><i></i><span id="progtext">1 / 6</span></div>
+    <div class="prog" id="prog"><i></i><i></i><i></i><i></i><i></i><span id="progtext">1 / 5</span></div>
   </header>
 
   <main>
@@ -129,16 +139,13 @@ textarea{width:100%;font:inherit;font-size:16px;line-height:1.7;color:var(--ink)
         <button type="button" class="chip" data-v="金箔の壁と盆栽のある待合スペースが落ち着きました">金箔と盆栽の待合が落ち着く</button>
         <button type="button" class="chip" data-v="22時まで営業しているので仕事帰りに寄れて助かりました">22時までで助かる</button>
       </div>
-    </section>
-
-    <section class="screen" data-step="4" hidden>
-      <h2>ほかに、ひとこと</h2>
+      <div class="label">ほかに、ひとこと</div>
       <p class="hint">なくても大丈夫。あれば、あなたの言葉で。</p>
       <textarea id="free" placeholder="例:担当の方の説明がわかりやすかった、など"></textarea>
       <p class="meta" id="consent">送られるのは、選んだ項目と入力した文章だけです。お名前や連絡先は送られません。サービス改善と、同意をいただいた場合のお客様の声掲載に使います。</p>
     </section>
 
-    <section class="screen" data-step="5" hidden>
+    <section class="screen" data-step="4" hidden>
       <div class="done" id="sent-note">アンケートを送信しました。ありがとうございます。</div>
       <h2>もしよければ、<br>Google の口コミにも</h2>
       <p class="hint">お答えをもとに例文を作りました。そのまま使っても、直しても大丈夫です。</p>
@@ -156,7 +163,7 @@ textarea{width:100%;font:inherit;font-size:16px;line-height:1.7;color:var(--ink)
       </div>
     </section>
 
-    <section class="screen" data-step="6" hidden>
+    <section class="screen" data-step="5" hidden>
       <h2 id="fin-title">ありがとうございました</h2>
       <p class="lead" id="fin-lead">今日はぽかぽか堂にお越しいただき、ありがとうございました。またのご来店をお待ちしています。</p>
       <div class="stack">
@@ -180,7 +187,7 @@ textarea{width:100%;font:inherit;font-size:16px;line-height:1.7;color:var(--ink)
   // 回答の保存先(Google Apps Script のウェブアプリ URL)。空なら「回答を送る」は表示されない。
   var SUBMIT_URL = '';
   var SOURCE = (location.hash || '').replace('#','') || 'direct';
-  var STEPS = 6;
+  var STEPS = 5;
   var groups = ['course','visit','worry','trigger','feel'];
   var single = ['course','visit'];
   var state = {course:'', visit:'', worry:[], trigger:[], feel:[], free:'', seed:Math.floor(Math.random()*3), step:1};
@@ -230,13 +237,13 @@ textarea{width:100%;font:inherit;font-size:16px;line-height:1.7;color:var(--ink)
     progtext.textContent = state.step + ' / ' + STEPS;
     back.hidden = state.step === 1;
     navin.classList.toggle('solo', state.step === 1);
-    document.querySelector('.nav').hidden = state.step >= 5;
-    if (state.step === 4) { next.textContent = 'アンケートを送信する'; next.className = 'btn btn-primary'; }
+    document.querySelector('.nav').hidden = state.step >= 4;
+    if (state.step === 3) { next.textContent = 'アンケートを送信する'; next.className = 'btn btn-primary'; }
     else { next.textContent = '次へ'; next.className = 'btn btn-primary'; }
     window.scrollTo(0,0); save();
   }
   next.addEventListener('click', function(){
-    if (state.step === 4) { submitSurvey(); return; }
+    if (state.step === 3) { submitSurvey(); return; }
     show(state.step + 1);
   });
   back.addEventListener('click', function(){ show(state.step - 1); });
@@ -249,7 +256,7 @@ textarea{width:100%;font:inherit;font-size:16px;line-height:1.7;color:var(--ink)
   // アンケート送信(確定)。保存先が未設定でも画面は進む。
   function submitSurvey(){
     next.disabled = true; next.textContent = '送信中…';
-    var finish = function(){ state.sent = true; next.disabled = false; save(); show(5); };
+    var finish = function(){ state.sent = true; next.disabled = false; save(); show(4); };
     if (!SUBMIT_URL) { finish(); return; }
     var body = new URLSearchParams({
       source: SOURCE, course: state.course, visit: state.visit === 'first' ? '初回' : (state.visit === 'repeat' ? '2回目以降' : ''),
@@ -291,7 +298,7 @@ textarea{width:100%;font:inherit;font-size:16px;line-height:1.7;color:var(--ink)
       lead.textContent = '今日はぽかぽか堂にお越しいただき、ありがとうございました。またのご来店をお待ちしています。';
       g2.hidden = true;
     }
-    show(6);
+    show(5);
   }
   document.getElementById('gmap2').addEventListener('click', function(){ if (draft.value) copyNow(draft.value); });
 
@@ -343,3 +350,6 @@ textarea{width:100%;font:inherit;font-size:16px;line-height:1.7;color:var(--ink)
   restore(); compose(); show(state.step || 1);
 })();
 </script>
+
+</body>
+</html>
