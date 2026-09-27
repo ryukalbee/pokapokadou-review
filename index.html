@@ -61,6 +61,8 @@ textarea{width:100%;font:inherit;font-size:16px;line-height:1.7;color:var(--ink)
 .count{font-size:12.5px;color:var(--ink-soft);text-align:right;font-variant-numeric:tabular-nums;margin-top:-8px}
 .meta{font-size:12.5px;color:var(--ink-soft);line-height:1.6;display:grid;gap:6px}
 .meta p{margin:0}
+.done{background:var(--kaki-tint-2);border:1px solid var(--kaki-tint);color:var(--kaki-deep);border-radius:12px;padding:10px 14px;font-size:14px;font-weight:500}
+.hidden-copy{position:fixed;left:-9999px;top:0;opacity:0}
 details{border-top:1px dashed var(--line);padding-top:14px}
 summary{cursor:pointer;font-weight:700;color:var(--ink-soft);font-size:14px}
 details ul{padding-left:18px;margin:8px 0 0;font-size:14px;color:var(--ink-soft)}
@@ -73,7 +75,7 @@ details ul{padding-left:18px;margin:8px 0 0;font-size:14px;color:var(--ink-soft)
 <div class="app">
   <header class="top">
     <div class="eyebrow">お湯のない温泉｜ぽかぽか堂 五反田本店</div>
-    <div class="prog" id="prog"><i></i><i></i><i></i><i></i><i></i><span id="progtext">1 / 5</span></div>
+    <div class="prog" id="prog"><i></i><i></i><i></i><i></i><i></i><i></i><span id="progtext">1 / 6</span></div>
   </header>
 
   <main>
@@ -136,38 +138,45 @@ details ul{padding-left:18px;margin:8px 0 0;font-size:14px;color:var(--ink-soft)
       <h2>ほかに、ひとこと</h2>
       <p class="hint">なくても大丈夫。あれば、あなたの言葉で。</p>
       <textarea id="free" placeholder="例:担当の方の説明がわかりやすかった、など"></textarea>
+      <p class="meta" id="consent">送られるのは、選んだ項目と入力した文章だけです。お名前や連絡先は送られません。サービス改善と、同意をいただいた場合のお客様の声掲載に使います。</p>
     </section>
 
     <section class="screen" data-step="5" hidden>
-      <h2>口コミの例文ができました</h2>
-      <p class="hint">上の答えから組み立てた文章です。自由に直してください。</p>
+      <div class="done" id="sent-note">アンケートを送信しました。ありがとうございます。</div>
+      <h2>もしよければ、<br>Google の口コミにも</h2>
+      <p class="hint">お答えをもとに例文を作りました。そのまま使っても、直しても大丈夫です。</p>
       <textarea id="draft" aria-label="口コミの例文"></textarea>
       <div class="count"><span id="len">0</span> 文字</div>
       <div class="tags" id="tags"></div>
       <div class="stack">
-        <button type="button" class="btn btn-primary" id="copy">例文をコピー</button>
-        <a class="btn btn-ghost" id="gmap" href="https://www.google.com/maps?cid=17709550192882215151" target="_blank" rel="noopener">Google マップで口コミを書く</a>
-        <button type="button" class="btn btn-text" id="rephrase">別の言い回しにする</button>
+        <a class="btn btn-primary" id="gmap" href="https://www.google.com/maps?cid=17709550192882215151" target="_blank" rel="noopener">例文をコピーして Google マップへ</a>
         <div class="status" id="status"></div>
-      </div>
-      <div class="stack" id="submit-row" hidden>
-        <button type="button" class="btn btn-ghost" id="submit">回答を送る(お店にだけ届きます)</button>
-        <div class="status" id="submit-status"></div>
+        <button type="button" class="btn btn-text" id="rephrase">別の言い回しにする</button>
+        <button type="button" class="btn btn-text" id="skip">口コミは書かずに終わる</button>
       </div>
       <div class="meta">
-        <p>Google マップが開いたら「クチコミを書く」を押して、コピーした文章を貼り付けてください。</p>
+        <p>Google マップが開いたら「クチコミを書く」を押し、文章の欄で長押しして「ペースト」してください。</p>
         <p>投稿は任意で、特典や割引とは結びついていません。内容はご自身の体験に合わせて自由に変えてください。</p>
-        <p id="consent" hidden>「回答を送る」で送られるのは、選んだ項目と入力した文章だけです。お名前や連絡先は送られません。サービス改善と、同意をいただいた場合のお客様の声掲載に使います。</p>
+      </div>
+    </section>
+
+    <section class="screen" data-step="6" hidden>
+      <h2 id="fin-title">ありがとうございました</h2>
+      <p class="lead" id="fin-lead">今日はぽかぽか堂にお越しいただき、ありがとうございました。またのご来店をお待ちしています。</p>
+      <div class="stack">
+        <a class="btn btn-ghost" id="gmap2" href="https://www.google.com/maps?cid=17709550192882215151" target="_blank" rel="noopener" hidden>もう一度 Google マップを開く</a>
+        <button type="button" class="btn btn-text" id="restart">最初からやり直す</button>
       </div>
       <details>
         <summary>設計メモ(店舗スタッフ用)</summary>
         <ul>
           <li>例文は HP(2026-09-25 版)の MEO キーワードを軸に組み立てます。五反田駅徒歩1分、冷え専門店、お湯のない温泉、超音波、身体の芯から、血行・めぐり、コース名、初回4,900円、手ぶら、22時まで。</li>
-          <li>書き出しと締めは3パターン。初期表示はランダムで、「別の言い回しにする」で切り替わります。</li>
-          <li>Google のリンクは HP と同じ地図リンクです。開いた先で「クチコミを書く」を押す手順です。</li>
+          <li>「アンケートを送信する」で回答が確定します(保存先 URL 設定後はスプレッドシートに届きます)。その後に口コミのお願いを出します。</li>
+          <li>「例文をコピーして Google マップへ」は、押した瞬間に例文をクリップボードへ入れてから地図を開きます。地図側で「クチコミを書く」→ ペースト、の手順です。</li>
         </ul>
       </details>
     </section>
+
   </main>
 
   <footer class="nav">
@@ -183,7 +192,7 @@ details ul{padding-left:18px;margin:8px 0 0;font-size:14px;color:var(--ink-soft)
   // 回答の保存先(Google Apps Script のウェブアプリ URL)。空なら「回答を送る」は表示されない。
   var SUBMIT_URL = '';
   var SOURCE = (location.hash || '').replace('#','') || 'direct';
-  var STEPS = 5;
+  var STEPS = 6;
   var groups = ['course','visit','worry','trigger','feel'];
   var single = ['course','visit'];
   var state = {course:'', visit:'', worry:[], trigger:[], feel:[], free:'', seed:Math.floor(Math.random()*3), step:1};
@@ -233,20 +242,70 @@ details ul{padding-left:18px;margin:8px 0 0;font-size:14px;color:var(--ink-soft)
     progtext.textContent = state.step + ' / ' + STEPS;
     back.hidden = state.step === 1;
     navin.classList.toggle('solo', state.step === 1);
-    if (state.step === STEPS) { next.textContent = '最初からやり直す'; next.className = 'btn btn-text'; }
-    else if (state.step === STEPS - 1) { next.textContent = '例文を見る'; next.className = 'btn btn-primary'; }
+    document.querySelector('.nav').hidden = state.step >= 5;
+    if (state.step === 4) { next.textContent = 'アンケートを送信する'; next.className = 'btn btn-primary'; }
     else { next.textContent = '次へ'; next.className = 'btn btn-primary'; }
     window.scrollTo(0,0); save();
   }
   next.addEventListener('click', function(){
-    if (state.step === STEPS) { reset(); return; }
+    if (state.step === 4) { submitSurvey(); return; }
     show(state.step + 1);
   });
   back.addEventListener('click', function(){ show(state.step - 1); });
+  document.getElementById('restart').addEventListener('click', function(){ reset(); });
   function reset(){
-    state.course=''; state.visit=''; state.worry=[]; state.trigger=[]; state.feel=[]; state.free='';
+    state.course=''; state.visit=''; state.worry=[]; state.trigger=[]; state.feel=[]; state.free=''; state.sent=false; state.choice='';
     state.seed = Math.floor(Math.random()*3); restore(); compose(); show(1);
   }
+
+  // アンケート送信(確定)。保存先が未設定でも画面は進む。
+  function submitSurvey(){
+    next.disabled = true; next.textContent = '送信中…';
+    var finish = function(){ state.sent = true; next.disabled = false; save(); show(5); };
+    if (!SUBMIT_URL) { finish(); return; }
+    var body = new URLSearchParams({
+      source: SOURCE, course: state.course, visit: state.visit === 'first' ? '初回' : (state.visit === 'repeat' ? '2回目以降' : ''),
+      worry: state.worry.join(' / '), trigger: state.trigger.join(' / '), feel: state.feel.join(' / '),
+      free: state.free || '', draft: draft.value
+    });
+    fetch(SUBMIT_URL, { method:'POST', mode:'no-cors', body: body }).then(finish, finish);
+  }
+
+  // 例文をクリップボードに入れてから Google マップへ(リンクの既定動作で移動)
+  function copyNow(text){
+    var ok = false;
+    try {
+      var ta = document.createElement('textarea'); ta.className = 'hidden-copy'; ta.value = text; ta.setAttribute('readonly','');
+      document.body.appendChild(ta); ta.select(); ta.setSelectionRange(0, text.length);
+      ok = document.execCommand('copy'); document.body.removeChild(ta);
+    } catch (e) { ok = false; }
+    if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(text).catch(function(){}); ok = true; }
+    return ok;
+  }
+  document.getElementById('gmap').addEventListener('click', function(){
+    var t = draft.value;
+    if (t) {
+      var ok = copyNow(t);
+      status.textContent = ok ? '例文をコピーしました。Google マップの「クチコミを書く」で貼り付けてください。' : 'コピーできませんでした。文章を長押しでコピーしてください。';
+    }
+    state.choice = 'google'; save();
+    setTimeout(function(){ finishScreen('google'); }, 400);
+  });
+  document.getElementById('skip').addEventListener('click', function(){ state.choice = 'skip'; save(); finishScreen('skip'); });
+  function finishScreen(choice){
+    var title = document.getElementById('fin-title'), lead = document.getElementById('fin-lead'), g2 = document.getElementById('gmap2');
+    if (choice === 'google') {
+      title.textContent = '例文をコピーしました';
+      lead.textContent = 'Google マップの「クチコミを書く」を押し、文章の欄で長押しして「ペースト」してください。ご協力ありがとうございます。';
+      g2.hidden = false;
+    } else {
+      title.textContent = 'ありがとうございました';
+      lead.textContent = '今日はぽかぽか堂にお越しいただき、ありがとうございました。またのご来店をお待ちしています。';
+      g2.hidden = true;
+    }
+    show(6);
+  }
+  document.getElementById('gmap2').addEventListener('click', function(){ if (draft.value) copyNow(draft.value); });
 
   function joinJa(arr){ return arr.length <= 1 ? (arr[0] || '') : arr.slice(0,-1).join('、') + '、' + arr[arr.length-1]; }
   function stem(s){ return s.replace(/(ました|でした|です)$/,''); }
@@ -296,30 +355,6 @@ details ul{padding-left:18px;margin:8px 0 0;font-size:14px;color:var(--ink-soft)
     kw.forEach(function(k){ if (draft.value.indexOf(k) !== -1) { var t = document.createElement('span'); t.className = 'tag'; t.textContent = k; tags.appendChild(t); } });
   }
   draft.addEventListener('input', after);
-
-  document.getElementById('copy').addEventListener('click', function(){
-    var t = draft.value; if (!t) { status.textContent = 'まだ何も選ばれていません。'; return; }
-    var done = function(){ status.textContent = 'コピーしました。Google マップの「クチコミを書く」に貼り付けてください。'; };
-    var fail = function(){ draft.focus(); draft.select(); status.textContent = '選択したので、長押しでコピーしてください。'; };
-    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(done, fail); else fail();
-  });
-
-  var submitRow = document.getElementById('submit-row'), submitBtn = document.getElementById('submit'), submitStatus = document.getElementById('submit-status');
-  if (SUBMIT_URL) { submitRow.hidden = false; document.getElementById('consent').hidden = false; }
-  submitBtn.addEventListener('click', function(){
-    if (!draft.value) { submitStatus.textContent = 'まだ何も選ばれていません。'; return; }
-    var body = new URLSearchParams({
-      source: SOURCE, course: state.course, visit: state.visit === 'first' ? '初回' : (state.visit === 'repeat' ? '2回目以降' : ''),
-      worry: state.worry.join(' / '), trigger: state.trigger.join(' / '), feel: state.feel.join(' / '),
-      free: state.free || '', draft: draft.value
-    });
-    submitBtn.disabled = true; submitStatus.textContent = '送信中…';
-    fetch(SUBMIT_URL, { method:'POST', mode:'no-cors', body: body }).then(function(){
-      submitStatus.textContent = 'ありがとうございます。お店に届きました。';
-    }, function(){
-      submitBtn.disabled = false; submitStatus.textContent = '送れませんでした。電波の良い場所でもう一度お試しください。';
-    });
-  });
 
   restore(); compose(); show(state.step || 1);
 })();
