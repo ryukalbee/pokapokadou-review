@@ -63,9 +63,6 @@ textarea{width:100%;font:inherit;font-size:16px;line-height:1.7;color:var(--ink)
 .meta p{margin:0}
 .done{background:var(--kaki-tint-2);border:1px solid var(--kaki-tint);color:var(--kaki-deep);border-radius:12px;padding:10px 14px;font-size:14px;font-weight:500}
 .hidden-copy{position:fixed;left:-9999px;top:0;opacity:0}
-details{border-top:1px dashed var(--line);padding-top:14px}
-summary{cursor:pointer;font-weight:700;color:var(--ink-soft);font-size:14px}
-details ul{padding-left:18px;margin:8px 0 0;font-size:14px;color:var(--ink-soft)}
 .nav{position:fixed;left:0;right:0;bottom:0;z-index:5;background:var(--nav);backdrop-filter:blur(8px);border-top:1px solid var(--line);padding:12px 20px calc(12px + env(safe-area-inset-bottom,0px))}
 .nav .in{max-width:560px;margin:0 auto;display:grid;grid-template-columns:1fr 2fr;gap:10px}
 .nav .in.solo{grid-template-columns:1fr}
@@ -147,7 +144,6 @@ details ul{padding-left:18px;margin:8px 0 0;font-size:14px;color:var(--ink-soft)
       <p class="hint">お答えをもとに例文を作りました。そのまま使っても、直しても大丈夫です。</p>
       <textarea id="draft" aria-label="口コミの例文"></textarea>
       <div class="count"><span id="len">0</span> 文字</div>
-      <div class="tags" id="tags"></div>
       <div class="stack">
         <a class="btn btn-primary" id="gmap" href="https://www.google.com/maps?cid=17709550192882215151" target="_blank" rel="noopener">例文をコピーして Google マップへ</a>
         <div class="status" id="status"></div>
@@ -167,14 +163,6 @@ details ul{padding-left:18px;margin:8px 0 0;font-size:14px;color:var(--ink-soft)
         <a class="btn btn-ghost" id="gmap2" href="https://www.google.com/maps?cid=17709550192882215151" target="_blank" rel="noopener" hidden>もう一度 Google マップを開く</a>
         <button type="button" class="btn btn-text" id="restart">最初からやり直す</button>
       </div>
-      <details>
-        <summary>設計メモ(店舗スタッフ用)</summary>
-        <ul>
-          <li>例文は HP(2026-09-25 版)の MEO キーワードを軸に組み立てます。五反田駅徒歩1分、冷え専門店、お湯のない温泉、超音波、身体の芯から、血行・めぐり、コース名、初回4,900円、手ぶら、22時まで。</li>
-          <li>「アンケートを送信する」で回答が確定します(保存先 URL 設定後はスプレッドシートに届きます)。その後に口コミのお願いを出します。</li>
-          <li>「例文をコピーして Google マップへ」は、押した瞬間に例文をクリップボードへ入れてから地図を開きます。地図側で「クチコミを書く」→ ペースト、の手順です。</li>
-        </ul>
-      </details>
     </section>
 
   </main>
@@ -197,7 +185,7 @@ details ul{padding-left:18px;margin:8px 0 0;font-size:14px;color:var(--ink-soft)
   var single = ['course','visit'];
   var state = {course:'', visit:'', worry:[], trigger:[], feel:[], free:'', seed:Math.floor(Math.random()*3), step:1};
   var draft = document.getElementById('draft'), free = document.getElementById('free');
-  var status = document.getElementById('status'), len = document.getElementById('len'), tags = document.getElementById('tags');
+  var status = document.getElementById('status'), len = document.getElementById('len');
 
   try { var saved = JSON.parse(localStorage.getItem('pokapoka-review') || 'null'); if (saved && typeof saved === 'object') state = Object.assign(state, saved); } catch (e) {}
   function save(){ try { localStorage.setItem('pokapoka-review', JSON.stringify(state)); } catch (e) {} }
@@ -344,16 +332,12 @@ details ul{padding-left:18px;margin:8px 0 0;font-size:14px;color:var(--ink-soft)
     ];
     p.push(closes[v]);
     var any = s.course || s.visit || s.worry.length || s.trigger.length || s.feel.length || (s.free && s.free.trim());
-    draft.value = any ? p.join('\n') : '';
+    var text = p.join('\n').replace(/。(?!\n|$)/g, '。\n').replace(/\n{2,}/g, '\n');
+    draft.value = any ? text : '';
     after();
   }
 
-  var kw = ['五反田','徒歩1分','冷え専門店','お湯のない温泉','超音波','芯から','血行','めぐり','冷え','疲れ','肩や腰','コリ','むくみ','ぽかぽか','全身ぽかぽか巡りコース','至福のフルリセットコース','部分集中クイック温熱コース','初回','4,900円','手ぶら','22時','温活','仕事帰り'];
-  function after(){
-    len.textContent = draft.value.length;
-    tags.innerHTML = '';
-    kw.forEach(function(k){ if (draft.value.indexOf(k) !== -1) { var t = document.createElement('span'); t.className = 'tag'; t.textContent = k; tags.appendChild(t); } });
-  }
+  function after(){ len.textContent = draft.value.length; }
   draft.addEventListener('input', after);
 
   restore(); compose(); show(state.step || 1);
