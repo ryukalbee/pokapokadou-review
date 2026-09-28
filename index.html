@@ -114,7 +114,7 @@ textarea{width:100%;font:inherit;font-size:16px;line-height:1.7;color:var(--ink)
 
     <section class="screen compact" data-step="2" hidden>
       <h2>来る前、気になっていたことは</h2>
-      <div class="label">気になっていたこと(いくつでも)</div>
+      <div class="label">気になっていたこと(複数可)</div>
       <div class="chips" id="worry" role="group" aria-label="悩み">
         <button type="button" class="chip" data-v="手足がいつもひんやりする冷え">手足の冷え</button>
         <button type="button" class="chip" data-v="休んでも抜けない疲れ">疲れが抜けない</button>
@@ -135,7 +135,7 @@ textarea{width:100%;font:inherit;font-size:16px;line-height:1.7;color:var(--ink)
 
     <section class="screen" data-step="3" hidden>
       <h2>受けてみて、どうでしたか？</h2>
-      <p class="hint">あてはまるものをいくつでも。</p>
+      <p class="hint">あてはまるものをお選びください(複数可)。</p>
       <div class="chips" id="feel" role="group" aria-label="体感">
         <button type="button" class="chip" data-v="身体の芯からじっくり温まりました">身体の芯から温まった</button>
         <button type="button" class="chip" data-v="血行が良くなって、めぐりが整った感じがしました">血行・めぐりが良くなった感じ</button>
@@ -150,27 +150,27 @@ textarea{width:100%;font:inherit;font-size:16px;line-height:1.7;color:var(--ink)
         <button type="button" class="chip" data-v="金箔の壁と盆栽のある待合スペースが落ち着きました">金箔と盆栽の待合が落ち着く</button>
         <button type="button" class="chip" data-v="22時まで営業しているので仕事帰りに寄れて助かりました">22時までで助かる</button>
       </div>
-      <div class="label">ほかに、ひとこと</div>
-      <p class="hint">なくても大丈夫。あれば、あなたの言葉で。</p>
+      <div class="label">その他、ご感想があればお聞かせください</div>
+      <p class="hint">任意です。ご自由にお書きください。</p>
       <textarea id="free" placeholder="例:担当の方の説明がわかりやすかった、など"></textarea>
       <p class="meta" id="consent">送られるのは、選んだ項目と入力した文章だけです。お名前や連絡先は送られません。サービス改善と、同意をいただいた場合のお客様の声掲載に使います。</p>
     </section>
 
     <section class="screen" data-step="4" hidden>
-      <div class="done" id="sent-note">アンケートを送信しました。ありがとうございます。</div>
+      <div class="done" id="sent-note">アンケートを送信しました。ご協力ありがとうございます。</div>
       <h2>もしよければ、<br>Google の口コミにも</h2>
-      <p class="hint">お答えをもとに例文を作りました。そのまま使っても、直しても大丈夫です。</p>
+      <p class="hint">ご回答をもとに例文をご用意しました。そのままでも、書き直していただいても構いません。</p>
       <textarea id="draft" aria-label="口コミの例文"></textarea>
       <div class="count"><span id="len">0</span> 文字</div>
       <div class="stack">
         <a class="btn btn-primary" id="gmap" href="https://www.google.com/maps?cid=17709550192882215151" target="_blank" rel="noopener">例文をコピーして Google マップへ</a>
         <div class="status" id="status"></div>
         <button type="button" class="btn btn-text" id="rephrase">別の言い回しにする</button>
-        <button type="button" class="btn btn-text" id="skip">口コミは書かずに終わる</button>
+        <button type="button" class="btn btn-text" id="skip">今回は書かずに終了する</button>
       </div>
       <div class="meta">
         <p>Google マップが開いたら「クチコミを書く」を押し、文章の欄で長押しして「ペースト」してください。</p>
-        <p>投稿は任意で、特典や割引とは結びついていません。内容はご自身の体験に合わせて自由に変えてください。</p>
+        <p>投稿は任意です。特典や割引との引き換えではありません。内容はご自身の体験に合わせて自由にご変更ください。</p>
       </div>
     </section>
 
