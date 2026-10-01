@@ -50,6 +50,11 @@ h2{font-family:"Shippori Mincho","Hiragino Mincho ProN","Yu Mincho",serif;text-w
 .label+.hint{margin-top:2px}
 .chips{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .chips.one{grid-template-columns:1fr}
+.chips.three{grid-template-columns:1fr 1fr 1fr}
+.chips.mini{gap:8px}
+.chips.mini .chip{min-height:44px;padding:6px 10px;font-size:14.5px;border-radius:12px;justify-content:center;text-align:center;box-shadow:none}
+.chips.mini .chip::before{display:none}
+textarea.short{min-height:84px}
 .chip{appearance:none;border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:14px;min-height:56px;padding:10px 12px 10px 12px;font:inherit;font-size:15.5px;line-height:1.35;cursor:pointer;text-align:left;display:flex;align-items:center;gap:10px;transition:background .15s,border-color .15s;box-shadow:var(--shadow)}
 .chip::before{content:"";flex:0 0 20px;width:20px;height:20px;border-radius:50%;border:2px solid var(--line);background:var(--paper)}
 .chip[aria-pressed="true"]{background:var(--kaki-tint);border-color:var(--kaki);font-weight:500}
@@ -101,9 +106,9 @@ textarea{width:100%;font:inherit;font-size:16px;line-height:1.7;color:var(--ink)
       <h2>今日はどのコースでしたか？</h2>
       <p class="lead">皆様の感想が私たちの励みとなり、サービス向上へと繋がります。</p>
       <div class="chips one" id="course" role="group" aria-label="コース">
-        <button type="button" class="chip" data-v="全身ぽかぽか巡りコース(110分)">全身ぽかぽか巡りコース 110分</button>
-        <button type="button" class="chip" data-v="至福のフルリセットコース(180分)">至福のフルリセットコース 180分</button>
-        <button type="button" class="chip" data-v="部分集中クイック温熱コース(50分)">部分集中クイック温熱コース 50分</button>
+        <button type="button" class="chip" data-v="c1">全身ぽかぽか巡りコース 110分</button>
+        <button type="button" class="chip" data-v="c2">至福のフルリセットコース 180分</button>
+        <button type="button" class="chip" data-v="c3">部分集中クイック温熱コース 50分</button>
       </div>
       <div class="label">ご来店は</div>
       <div class="chips" id="visit" role="group" aria-label="来店回数">
@@ -116,61 +121,78 @@ textarea{width:100%;font:inherit;font-size:16px;line-height:1.7;color:var(--ink)
       <h2>来る前、気になっていたことは</h2>
       <div class="label">気になっていたこと(複数可)</div>
       <div class="chips" id="worry" role="group" aria-label="悩み">
-        <button type="button" class="chip" data-v="手足がいつもひんやりする冷え">手足の冷え</button>
-        <button type="button" class="chip" data-v="休んでも抜けない疲れ">疲れが抜けない</button>
-        <button type="button" class="chip" data-v="肩や腰の重さ">肩や腰の重さ</button>
-        <button type="button" class="chip" data-v="デスクワークで固まった身体のコリ">デスクワークのコリ</button>
-        <button type="button" class="chip" data-v="足のむくみ">足のむくみ</button>
-        <button type="button" class="chip" data-v="寝つきの悪さ">寝つきが悪い</button>
+        <button type="button" class="chip" data-v="w1">手足の冷え</button>
+        <button type="button" class="chip" data-v="w2">疲れが抜けない</button>
+        <button type="button" class="chip" data-v="w3">肩や腰の重さ</button>
+        <button type="button" class="chip" data-v="w4">デスクワークのコリ</button>
+        <button type="button" class="chip" data-v="w5">足のむくみ</button>
+        <button type="button" class="chip" data-v="w6">寝つきが悪い</button>
       </div>
       <div class="label">来店のきっかけ</div>
       <div class="chips" id="trigger" role="group" aria-label="きっかけ">
-        <button type="button" class="chip" data-v="仕事帰りに寄れる場所を探していて">仕事帰りに寄れる所を探して</button>
-        <button type="button" class="chip" data-v="五反田駅の近くで温活できる店を探していて">五反田駅近くで温活の店を探して</button>
-        <button type="button" class="chip" data-v="「お湯のない温泉」という名前が気になって">「お湯のない温泉」が気になって</button>
-        <button type="button" class="chip" data-v="超音波で温めるケアを試してみたくて">超音波のケアを試したくて</button>
-        <button type="button" class="chip" data-v="知人にすすめられて">知人にすすめられて</button>
+        <button type="button" class="chip" data-v="t1">仕事帰りに寄れる所を探して</button>
+        <button type="button" class="chip" data-v="t2">五反田駅近くで温活の店を探して</button>
+        <button type="button" class="chip" data-v="t3">「お湯のない温泉」が気になって</button>
+        <button type="button" class="chip" data-v="t4">超音波のケアを試したくて</button>
+        <button type="button" class="chip" data-v="t5">知人にすすめられて</button>
       </div>
     </section>
 
     <section class="screen" data-step="3" hidden>
       <h2>受けてみて、どうでしたか？</h2>
-      <p class="hint">あてはまるものをお選びください(複数可)。</p>
+      <p class="hint">あてはまるものをお選びください(複数可)。良かった点も、気になった点も、そのままお聞かせください。</p>
       <div class="chips" id="feel" role="group" aria-label="体感">
-        <button type="button" class="chip" data-v="身体の芯からじっくり温まりました">身体の芯から温まった</button>
-        <button type="button" class="chip" data-v="血行が良くなって、めぐりが整った感じがしました">血行・めぐりが良くなった感じ</button>
-        <button type="button" class="chip" data-v="手足の先までぽかぽかになりました">手足の先までぽかぽか</button>
-        <button type="button" class="chip" data-v="肩や腰の重さがすっと軽くなりました">肩や腰が軽くなった</button>
-        <button type="button" class="chip" data-v="気持ちよくて途中で眠ってしまいました">途中で眠ってしまった</button>
-        <button type="button" class="chip" data-v="帰り道の足取りが軽かったです">帰り道が軽かった</button>
-        <button type="button" class="chip" data-v="その夜はぐっすり眠れました">その夜ぐっすり眠れた</button>
-        <button type="button" class="chip" data-v="温泉から上がったあとのような温かさが続きました">温泉上がりみたいな温かさ</button>
-        <button type="button" class="chip" data-v="熱くないか何度も声をかけてくれて安心でした">声かけが丁寧で安心</button>
-        <button type="button" class="chip" data-v="施術着が用意されていて手ぶらで行けるのが楽でした">手ぶらで行けて楽</button>
-        <button type="button" class="chip" data-v="金箔の壁と盆栽のある待合スペースが落ち着きました">金箔と盆栽の待合が落ち着く</button>
-        <button type="button" class="chip" data-v="22時まで営業しているので仕事帰りに寄れて助かりました">22時までで助かる</button>
+        <button type="button" class="chip" data-v="f1">身体の芯から温まった</button>
+        <button type="button" class="chip" data-v="f2">血行・めぐりが良くなった感じ</button>
+        <button type="button" class="chip" data-v="f3">手足の先までぽかぽか</button>
+        <button type="button" class="chip" data-v="f4">肩や腰が軽くなった</button>
+        <button type="button" class="chip" data-v="f5">途中で眠ってしまった</button>
+        <button type="button" class="chip" data-v="f6">帰り道が軽かった</button>
+        <button type="button" class="chip" data-v="f7">その夜ぐっすり眠れた</button>
+        <button type="button" class="chip" data-v="f8">温泉上がりみたいな温かさ</button>
+        <button type="button" class="chip" data-v="f9">声かけが丁寧で安心</button>
+        <button type="button" class="chip" data-v="f10">手ぶらで行けて楽</button>
+        <button type="button" class="chip" data-v="f11">金箔と盆栽の待合が落ち着く</button>
+        <button type="button" class="chip" data-v="f12">遅い時間まで開いていて助かる</button>
+        <button type="button" class="chip" data-v="n1">思ったほど温まらなかった</button>
+        <button type="button" class="chip" data-v="n2">変化はよく分からなかった</button>
+        <button type="button" class="chip" data-v="n3">気になった点があった</button>
       </div>
-      <div class="label">その他、ご感想があればお聞かせください</div>
-      <p class="hint">任意です。ご自由にお書きください。</p>
-      <textarea id="free" placeholder="例:担当の方の説明がわかりやすかった、など"></textarea>
+      <div class="label">いちばん印象に残ったことを、ひとことで</div>
+      <p class="hint">任意です。ご自身の言葉でどうぞ。</p>
+      <textarea id="own" class="short" placeholder="ご自由にお書きください"></textarea>
+      <div class="label">気になった点・こうだともっと良い点</div>
+      <p class="hint">任意です。遠慮なくお書きください。</p>
+      <textarea id="concern" class="short" placeholder="ご自由にお書きください"></textarea>
       <p class="meta" id="consent">送られるのは、選んだ項目と入力した文章だけです。お名前や連絡先は送られません。サービス改善と、同意をいただいた場合のお客様の声掲載に使います。</p>
     </section>
 
     <section class="screen" data-step="4" hidden>
       <div class="done" id="sent-note">アンケートを送信しました。ご協力ありがとうございます。</div>
       <h2>もしよければ、<br>Google の口コミにも</h2>
-      <p class="hint">ご回答をもとに例文をご用意しました。そのままでも、書き直していただいても構いません。</p>
-      <textarea id="draft" aria-label="口コミの例文"></textarea>
+      <p class="hint">お答えいただいた内容だけで下書きを作りました。ご自身の言葉に直してからご投稿ください。気になった点も、そのままで構いません。</p>
+      <div class="label">長さ</div>
+      <div class="chips three mini" id="dlen" role="group" aria-label="下書きの長さ">
+        <button type="button" class="chip" data-v="short">ひとこと</button>
+        <button type="button" class="chip" data-v="normal">ふつう</button>
+        <button type="button" class="chip" data-v="long">くわしく</button>
+      </div>
+      <div class="label">語り口</div>
+      <div class="chips mini" id="tone" role="group" aria-label="下書きの語り口">
+        <button type="button" class="chip" data-v="polite">ていねい</button>
+        <button type="button" class="chip" data-v="casual">くだけた</button>
+      </div>
+      <textarea id="draft" aria-label="口コミの下書き" placeholder="ここにご自身の言葉でお書きください"></textarea>
       <div class="count"><span id="len">0</span> 文字</div>
       <div class="stack">
-        <a class="btn btn-primary" id="gmap" href="https://www.google.com/maps?cid=17709550192882215151" target="_blank" rel="noopener">例文をコピーして Google マップへ</a>
+        <a class="btn btn-primary" id="gmap" href="https://www.google.com/maps?cid=17709550192882215151" target="_blank" rel="noopener">下書きをコピーして Google マップへ</a>
         <div class="status" id="status"></div>
-        <button type="button" class="btn btn-text" id="rephrase">別の言い回しにする</button>
+        <button type="button" class="btn btn-text" id="rephrase">並びと言い回しを変える</button>
         <button type="button" class="btn btn-text" id="skip">今回は書かずに終了する</button>
       </div>
       <div class="meta">
-        <p>Google マップが開いたら「クチコミを書く」を押し、文章の欄で長押しして「ペースト」してください。</p>
-        <p>投稿は任意です。特典や割引との引き換えではありません。内容はご自身の体験に合わせて自由にご変更ください。</p>
+        <p>Google マップが開いたら「クチコミを書く」を押し、文章の欄で長押しして「ペースト」してください。星の数はご自身でお決めください。</p>
+        <p>投稿は任意です。特典や割引との引き換えではありません。お帰りのあと、お時間のあるときで大丈夫です。内容はご自身の体験に合わせて自由にお書きください。</p>
       </div>
     </section>
 
@@ -196,19 +218,103 @@ textarea{width:100%;font:inherit;font-size:16px;line-height:1.7;color:var(--ink)
 
 <script>
 (function(){
-  // 回答の保存先(Google Apps Script のウェブアプリ URL)。空なら「回答を送る」は表示されない。
+  // 回答の保存先(Google Apps Script のウェブアプリ URL)。空なら送信せずに画面だけ進む。
   var SUBMIT_URL = '';
   var SOURCE = (location.hash || '').replace('#','') || 'direct';
   var STEPS = 5;
   var groups = ['course','visit','worry','trigger','feel'];
   var single = ['course','visit'];
-  var state = {course:'', visit:'', worry:[], trigger:[], feel:[], free:'', seed:Math.floor(Math.random()*3), step:1};
-  var draft = document.getElementById('draft'), free = document.getElementById('free');
+  var opts = ['dlen','tone'];
+  var sizes = ['short','normal','long'];
+
+  // 下書きに使う言い回し。お客様が選んだ項目だけを文章にする(店名・料金・お店の宣伝文は足さない)。
+  // 同じ項目でも人ごと・作り直すごとにちがう文になるよう、言い回しを複数用意して毎回選ぶ。
+  var COURSE = {
+    c1:{name:'全身ぽかぽか巡りコース', min:'110分'},
+    c2:{name:'至福のフルリセットコース', min:'180分'},
+    c3:{name:'部分集中クイック温熱コース', min:'50分'}
+  };
+  var WORRY = {
+    w1:{label:'手足の冷え', v:['手足の冷え','手先や足先の冷え','手足がいつもひんやりする冷え','指先や足先の冷え']},
+    w2:{label:'疲れが抜けない', v:['休んでも抜けない疲れ','なかなか取れない疲れ','寝ても残る疲れ','抜けにくい疲れ']},
+    w3:{label:'肩や腰の重さ', v:['肩や腰の重さ','肩と腰のだるさ','肩まわりや腰の重だるさ','肩と腰の重たい感じ']},
+    w4:{label:'デスクワークのコリ', v:['デスクワークで固まった身体のコリ','座りっぱなしでのコリ','パソコン仕事のコリ','デスクワーク続きの体のこわばり']},
+    w5:{label:'足のむくみ', v:['足のむくみ','脚のむくみ','足がむくみやすいこと']},
+    w6:{label:'寝つきが悪い', v:['寝つきの悪さ','寝つきがよくないこと','なかなか寝つけないこと']}
+  };
+  var TRIGGER = {
+    t1:{label:'仕事帰りに寄れる所を探して', v:['仕事帰りに寄れる場所を探していて','仕事のあとに行けるお店を探していて','会社帰りに立ち寄れるところを探していて']},
+    t2:{label:'五反田駅近くで温活の店を探して', v:['五反田駅の近くで温活できる店を探していて','駅の近くで体を温められるお店を探していて','五反田で温活できるところを探していて']},
+    t3:{label:'「お湯のない温泉」が気になって', v:['「お湯のない温泉」という名前が気になって','「お湯のない温泉」という言葉にひかれて','お湯のない温泉って何だろうと気になって']},
+    t4:{label:'超音波のケアを試したくて', v:['超音波で温めるケアを試してみたくて','超音波の温熱ケアに興味があって','超音波で温めるというのが気になって']},
+    t5:{label:'知人にすすめられて', v:['知人にすすめられて','知人に教えてもらって','知り合いにすすめられて','知り合いから聞いて']}
+  };
+  // p = ていねい、c = くだけた。body:true は体の感覚の項目(「受けてみると、」などの前置きを付けてよいもの)
+  var FEEL = {
+    f1:{label:'身体の芯から温まった', body:true,
+        p:['身体の芯からじっくり温まりました','体の奥のほうからじんわり温まる感じがしました','終わるころには芯までぽかぽかでした','体の内側から温まっていくのが分かりました','じわじわと芯まで温かくなりました','体の深いところまで温まった感じがしました','芯のほうからぽかぽかしてきました','ゆっくりと体の中から温まりました'],
+        c:['体の芯からじっくり温まった','奥のほうからじんわり温まる感じ','終わるころには芯までぽかぽか','体の内側から温まっていくのが分かった','じわじわ芯まで温かくなった','体の深いところまで温まった感じ','芯のほうからぽかぽかしてきた','ゆっくり体の中から温まった']},
+    f2:{label:'血行・めぐりが良くなった感じ', body:true,
+        p:['めぐりが良くなったような感じがしました','血行が良くなった気がします','全身がめぐっている感覚がありました','体のめぐりが整った感じがしました','血のめぐりが良くなったように感じました','体のめぐりが良くなった感覚がありました','血行が良くなったように感じました','全身のめぐりが良くなった気がします'],
+        c:['めぐりが良くなった感じがする','血行が良くなった気がした','全身がめぐっている感覚があった','体のめぐりが整った感じ','血のめぐりが良くなったように感じた','体のめぐりが良くなった感覚があった','血行が良くなったように感じた','全身のめぐりが良くなった気がする']},
+    f3:{label:'手足の先までぽかぽか', body:true,
+        p:['手足の先までぽかぽかになりました','冷えやすい指先まで温かくなりました','足先まで温かさが届きました','手先も足先もしっかり温まりました','いつも冷たい足先が温かくなりました','指先や足先までしっかり温かくなりました','手も足も先のほうまでぽかぽかでした','冷えがちな手足の先まで温まりました'],
+        c:['手足の先までぽかぽかになった','冷えやすい指先まで温かくなった','足先まで温かさが届いた','手先も足先もしっかり温まった','いつも冷たい足先が温かくなった','指先や足先までしっかり温かくなった','手も足も先のほうまでぽかぽか','冷えがちな手足の先まで温まった']},
+    f4:{label:'肩や腰が軽くなった', body:true,
+        p:['肩や腰の重さがすっと軽くなりました','肩まわりが軽くなった感じがします','腰のあたりが楽になりました','肩と腰がふっと楽になりました','重かった肩や腰が軽く感じました','肩や腰まわりがすっきり軽くなりました','肩と腰の重たさがやわらぎました','肩も腰も軽くなったように感じます'],
+        c:['肩や腰の重さがすっと軽くなった','肩まわりが軽くなった感じ','腰のあたりが楽になった','肩と腰がふっと楽になった','重かった肩や腰が軽く感じた','肩や腰まわりがすっきり軽くなった','肩と腰の重たさがやわらいだ','肩も腰も軽くなった感じがする']},
+    f5:{label:'途中で眠ってしまった', body:true,
+        p:['気持ちよくて途中で眠ってしまいました','気づいたら寝ていました','うとうとしているうちに終わっていました','心地よくていつの間にか寝落ちしていました','途中からぐっすり眠っていました','あまりの気持ちよさに途中で寝てしまいました','いつの間にか眠ってしまっていました','心地よくて途中から記憶がありません'],
+        c:['気持ちよくて途中で寝てしまった','気づいたら寝ていた','うとうとしているうちに終わっていた','心地よくていつの間にか寝落ちしていた','途中からぐっすり寝ていた','あまりの気持ちよさに途中で寝てしまった','いつの間にか眠ってしまっていた','心地よくて途中から記憶がない']},
+    f6:{label:'帰り道が軽かった',
+        p:['帰り道の足取りが軽かったです','帰りは体が軽く感じました','駅までの道を軽い足取りで帰れました','帰るときには体がすっと軽くなっていました','帰り道は足が軽く感じました','帰り道は体がふわっと軽かったです','帰りの足取りがいつもより軽く感じました','帰るころには足取りが軽くなっていました'],
+        c:['帰り道の足取りが軽かった','帰りは体が軽く感じた','駅までの道を軽い足取りで帰れた','帰るときには体がすっと軽くなっていた','帰り道は足が軽く感じた','帰り道は体がふわっと軽かった','帰りの足取りがいつもより軽く感じた','帰るころには足取りが軽くなっていた']},
+    f7:{label:'その夜ぐっすり眠れた',
+        p:['その夜はぐっすり眠れました','夜はいつもより寝つきがよかったです','その日は朝までよく眠れました','その晩はすっと眠りにつけました','当日の夜は深く眠れました','その夜はよく眠れました','その日の夜はぐっすりでした','夜は布団に入ってすぐ眠れました'],
+        c:['その夜はぐっすり眠れた','夜はいつもより寝つきがよかった','その日は朝までよく眠れた','その晩はすっと眠りにつけた','当日の夜は深く眠れた','その夜はよく眠れた','その日の夜はぐっすりだった','夜は布団に入ってすぐ眠れた']},
+    f8:{label:'温泉上がりみたいな温かさ',
+        p:['温泉から上がったあとのような温かさが続きました','お風呂上がりのような温かさがしばらく残りました','しばらく体がぽかぽかしていました','終わったあとも温泉上がりのように温かかったです','帰ってからも体の温かさが続きました','温泉に入ったあとのような温かさが残りました','終わってからもしばらく体が温かいままでした','湯上がりのようなぽかぽかが続きました'],
+        c:['温泉上がりみたいな温かさが続いた','お風呂上がりのような温かさがしばらく残った','しばらく体がぽかぽかしていた','終わったあとも温泉上がりのように温かかった','帰ってからも体の温かさが続いた','温泉に入ったあとみたいな温かさが残った','終わってからもしばらく体が温かいままだった','湯上がりみたいなぽかぽかが続いた']},
+    f9:{label:'声かけが丁寧で安心',
+        p:['熱くないか何度も声をかけてくれて安心でした','こまめに様子を聞いてもらえて安心できました','スタッフの方の声かけが丁寧でした','途中で何度も気づかってもらえて安心しました','温度を確かめながら進めてくれたので安心でした','スタッフの方がこまめに声をかけてくれて安心でした','熱さを何度も確認してくれたので安心して受けられました','様子を見ながら声をかけてもらえたのがよかったです'],
+        c:['熱くないか何度も声をかけてくれて安心だった','こまめに様子を聞いてもらえて安心できた','スタッフさんの声かけが丁寧だった','途中で何度も気づかってもらえて安心した','温度を確かめながら進めてくれたので安心だった','スタッフさんがこまめに声をかけてくれて安心だった','熱さを何度も確認してくれたので安心して受けられた','様子を見ながら声をかけてもらえたのがよかった']},
+    f10:{label:'手ぶらで行けて楽',
+        p:['施術着が用意されていて手ぶらで行けるのが楽でした','着替えを借りられるので荷物なしで行けました','手ぶらで行けるのが助かりました','施術着を貸してもらえるので身軽に行けました','何も持たずに行けるのが便利でした','施術着が用意されているので手ぶらで行けました','着替えを持っていかなくていいのが楽でした','荷物がいらないので気軽に行けました'],
+        c:['施術着があって手ぶらで行けるのが楽だった','着替えを借りられるので荷物なしで行けた','手ぶらで行けるのが助かった','施術着を貸してもらえるので身軽に行けた','何も持たずに行けるのが便利だった','施術着があるので手ぶらで行けた','着替えを持っていかなくていいのが楽だった','荷物がいらないので気軽に行けた']},
+    f11:{label:'金箔と盆栽の待合が落ち着く',
+        p:['金箔の壁と盆栽のある待合スペースが落ち着きました','和の雰囲気の待合が落ち着きました','店内の雰囲気が静かで落ち着きました','金の壁と盆栽が印象的で、落ち着く空間でした','和の内装がきれいで、ゆっくりできました','待合の金箔の壁と盆栽が落ち着く雰囲気でした','和の雰囲気の店内でゆったりできました','金箔の壁や盆栽のある空間が心地よかったです'],
+        c:['金箔の壁と盆栽のある待合が落ち着く','和の雰囲気の待合が落ち着いた','店内が静かで落ち着いた','金の壁と盆栽が印象的で、落ち着く空間だった','和の内装がきれいで、ゆっくりできた','待合の金箔の壁と盆栽が落ち着く雰囲気だった','和の雰囲気の店内でゆったりできた','金箔の壁や盆栽のある空間が心地よかった']},
+    f12:{label:'遅い時間まで開いていて助かる',
+        p:['遅い時間まで開いているので仕事帰りに寄れて助かりました','夜も営業しているので仕事のあとに行けました','仕事帰りの時間でも間に合いました','夜遅くまで開いているのがありがたかったです','仕事が終わってからでも行けるのが助かります','遅い時間までやっているので仕事帰りでも行けました','夜遅くまで営業しているので仕事のあとに寄れました','仕事終わりでも間に合う時間まで開いていて助かりました'],
+        c:['遅くまで開いているので仕事帰りに寄れて助かった','夜もやっているので仕事のあとに行けた','仕事帰りの時間でも間に合った','夜遅くまで開いているのがありがたかった','仕事が終わってからでも行けるのが助かる','遅い時間までやっているので仕事帰りでも行けた','夜遅くまで営業しているので仕事のあとに寄れた','仕事終わりでも間に合う時間まで開いていて助かった']},
+    n1:{label:'思ったほど温まらなかった', neg:true,
+        p:['正直、思っていたほどの温まりは感じませんでした','温まり方は期待していたほどではありませんでした','温まる感じは思ったより控えめでした','期待したほどは温まりませんでした','思っていたより温まりは弱く感じました','温まり方は少し物足りなく感じました'],
+        c:['正直、思っていたほどは温まらなかった','温まり方は期待したほどではなかった','温まる感じは思ったより控えめだった','期待したほどは温まらなかった','思っていたより温まりは弱く感じた','温まり方は少し物足りなかった']},
+    n2:{label:'変化はよく分からなかった', neg:true,
+        p:['1回では変化はよく分かりませんでした','違いは正直まだよく分かりません','1回受けただけでは変化までは分かりませんでした','変化があったかどうかはまだ何とも言えません','今回だけでは変化は実感できませんでした','変化については今のところよく分かりません'],
+        c:['1回では変化はよく分からなかった','違いは正直まだよく分からない','1回受けただけでは変化までは分からなかった','変化があったかどうかはまだ何とも言えない','今回だけでは変化は実感できなかった','変化については今のところよく分からない']},
+    n3:{label:'気になった点があった', neg:true,
+        p:['少し気になる点もありました','気になるところもありました','いくつか気になる点がありました','気になった点もいくつかありました','少し引っかかる点もありました'],
+        c:['少し気になる点もあった','気になるところもあった','いくつか気になる点があった','気になった点もいくつかあった','少し引っかかる点もあった']}
+  };
+
+  function newSeed(){ return Math.floor(Math.random() * 1000000000); }
+  var state = {course:'', visit:'', worry:[], trigger:[], feel:[], own:'', concern:'', manual:'',
+               dlen:sizes[Math.floor(Math.random() * 3)], tone:'polite', seed:newSeed(), step:1};
+  var draft = document.getElementById('draft'), own = document.getElementById('own'), concern = document.getElementById('concern');
   var status = document.getElementById('status'), len = document.getElementById('len');
+  var edited = false;
 
-  try { var saved = JSON.parse(localStorage.getItem('pokapoka-review') || 'null'); if (saved && typeof saved === 'object') state = Object.assign(state, saved); } catch (e) {}
-  function save(){ try { localStorage.setItem('pokapoka-review', JSON.stringify(state)); } catch (e) {} }
+  try { var saved = JSON.parse(localStorage.getItem('pokapoka-review-v3') || 'null'); if (saved && typeof saved === 'object') state = Object.assign(state, saved); } catch (e) {}
+  function save(){ try { localStorage.setItem('pokapoka-review-v3', JSON.stringify(state)); } catch (e) {} }
 
+  function markOpts(){
+    opts.forEach(function(g){
+      Array.prototype.forEach.call(document.getElementById(g).querySelectorAll('.chip'), function(btn){
+        btn.setAttribute('aria-pressed', btn.getAttribute('data-v') === state[g] ? 'true' : 'false');
+      });
+    });
+  }
   function restore(){
     groups.forEach(function(g){
       Array.prototype.forEach.call(document.getElementById(g).querySelectorAll('.chip'), function(btn){
@@ -217,7 +323,8 @@ textarea{width:100%;font:inherit;font-size:16px;line-height:1.7;color:var(--ink)
         btn.setAttribute('aria-pressed', on ? 'true' : 'false');
       });
     });
-    free.value = state.free || '';
+    own.value = state.own || ''; concern.value = state.concern || '';
+    markOpts();
   }
 
   groups.forEach(function(g){
@@ -236,8 +343,18 @@ textarea{width:100%;font:inherit;font-size:16px;line-height:1.7;color:var(--ink)
       compose(); save();
     });
   });
-  free.addEventListener('input', function(){ state.free = free.value; compose(); save(); });
-  document.getElementById('rephrase').addEventListener('click', function(){ state.seed = (state.seed + 1) % 3; compose(); save(); });
+  own.addEventListener('input', function(){ state.own = own.value; compose(); save(); });
+  concern.addEventListener('input', function(){ state.concern = concern.value; compose(); save(); });
+
+  // 下書きを手で直したあとに作り直すと消えるので、ひとこと確かめる
+  function okToRebuild(){ return !edited || window.confirm('書き直した内容は消えます。下書きを作り直しますか？'); }
+  opts.forEach(function(g){
+    document.getElementById(g).addEventListener('click', function(ev){
+      var btn = ev.target.closest('.chip'); if (!btn || !okToRebuild()) return;
+      state[g] = btn.getAttribute('data-v'); markOpts(); compose(); save();
+    });
+  });
+  document.getElementById('rephrase').addEventListener('click', function(){ if (!okToRebuild()) return; state.seed = newSeed(); compose(); save(); });
 
   // 画面切り替え
   var screens = document.querySelectorAll('.screen'), back = document.getElementById('back'), next = document.getElementById('next'), navin = document.getElementById('navin');
@@ -269,24 +386,28 @@ textarea{width:100%;font:inherit;font-size:16px;line-height:1.7;color:var(--ink)
   back.addEventListener('click', function(){ show(state.step - 1); });
   document.getElementById('restart').addEventListener('click', function(){ reset(); });
   function reset(){
-    state.course=''; state.visit=''; state.worry=[]; state.trigger=[]; state.feel=[]; state.free=''; state.sent=false; state.choice='';
-    state.seed = Math.floor(Math.random()*3); restore(); compose(); show(1);
+    state.course=''; state.visit=''; state.worry=[]; state.trigger=[]; state.feel=[]; state.own=''; state.concern=''; state.manual='';
+    state.sent=false; state.choice=''; state.seed = newSeed(); state.dlen = sizes[Math.floor(Math.random() * 3)]; state.tone = 'polite';
+    restore(); compose(); show(1);
   }
 
-  // アンケート送信(確定)。保存先が未設定でも画面は進む。
+  function labels(map, keys){ return keys.map(function(x){ return map[x] ? map[x].label : x; }); }
+  function courseLabel(x){ return COURSE[x] ? COURSE[x].name + '(' + COURSE[x].min + ')' : (x || ''); }
+
+  // アンケート送信(確定)。保存先が未設定でも画面は進む。回答の内容に関係なく、全員を同じ画面へ案内する。
   function submitSurvey(){
     next.disabled = true; next.textContent = '送信中…';
     var finish = function(){ state.sent = true; next.disabled = false; save(); show(4); };
     if (!SUBMIT_URL) { finish(); return; }
     var body = new URLSearchParams({
-      source: SOURCE, course: state.course, visit: state.visit === 'first' ? '初回' : (state.visit === 'repeat' ? '2回目以降' : ''),
-      worry: state.worry.join(' / '), trigger: state.trigger.join(' / '), feel: state.feel.join(' / '),
-      free: state.free || '', draft: draft.value
+      source: SOURCE, course: courseLabel(state.course), visit: state.visit === 'first' ? '初回' : (state.visit === 'repeat' ? '2回目以降' : ''),
+      worry: labels(WORRY, state.worry).join(' / '), trigger: labels(TRIGGER, state.trigger).join(' / '), feel: labels(FEEL, state.feel).join(' / '),
+      own: state.own || '', concern: state.concern || '', draft: draft.value
     });
     fetch(SUBMIT_URL, { method:'POST', mode:'no-cors', body: body }).then(finish, finish);
   }
 
-  // 例文をクリップボードに入れてから Google マップへ(リンクの既定動作で移動)
+  // 下書きをクリップボードに入れてから Google マップへ(リンクの既定動作で移動)
   function copyNow(text){
     var ok = false;
     try {
@@ -301,7 +422,7 @@ textarea{width:100%;font:inherit;font-size:16px;line-height:1.7;color:var(--ink)
     var t = draft.value;
     if (t) {
       var ok = copyNow(t);
-      status.textContent = ok ? '例文をコピーしました。Google マップの「クチコミを書く」で貼り付けてください。' : 'コピーできませんでした。文章を長押しでコピーしてください。';
+      status.textContent = ok ? '下書きをコピーしました。Google マップの「クチコミを書く」で貼り付けてください。' : 'コピーできませんでした。文章を長押しでコピーしてください。';
     }
     state.choice = 'google'; save();
     setTimeout(function(){ finishScreen('google'); }, 400);
@@ -310,8 +431,8 @@ textarea{width:100%;font:inherit;font-size:16px;line-height:1.7;color:var(--ink)
   function finishScreen(choice){
     var title = document.getElementById('fin-title'), lead = document.getElementById('fin-lead'), g2 = document.getElementById('gmap2');
     if (choice === 'google') {
-      title.textContent = '例文をコピーしました';
-      lead.textContent = 'Google マップの「クチコミを書く」を押し、文章の欄で長押しして「ペースト」してください。ご協力ありがとうございます。';
+      title.textContent = draft.value ? '下書きをコピーしました' : 'Google マップを開きました';
+      lead.textContent = 'Google マップの「クチコミを書く」を押し、文章の欄で長押しして「ペースト」してください。ご自身の言葉に直してからご投稿ください。ご協力ありがとうございます。';
       g2.hidden = false;
     } else {
       title.textContent = 'ありがとうございました';
@@ -322,52 +443,175 @@ textarea{width:100%;font:inherit;font-size:16px;line-height:1.7;color:var(--ink)
   }
   document.getElementById('gmap2').addEventListener('click', function(){ if (draft.value) copyNow(draft.value); });
 
-  function joinJa(arr){ return arr.length <= 1 ? (arr[0] || '') : arr.slice(0,-1).join('、') + '、' + arr[arr.length-1]; }
-  function stem(s){ return s.replace(/(ました|でした|です)$/,''); }
+  // 並びと言い回しを決める乱数。seed が同じあいだは同じ下書きになる
+  function rng(seed){ var s = seed >>> 0; return function(){ s = (s + 0x6D2B79F5) >>> 0; var t = s; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+  function pick(arr, r){ return arr[Math.floor(r() * arr.length)]; }
+  function shuffle(arr, r){ var a = arr.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(r() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  function joinJa(arr){ return arr.join('、'); }
+  function endStop(t){ return /[。．.！？!?…♪）)」』]$/.test(t) ? t : t + '。'; }
+  // 2つの文を「〜し、〜」で1文につなぐ(a, b は句点なし)
+  function joinShi(a, b, polite){ return a + (polite || /[ただいるく]$/.test(a) ? 'し、' : 'だったし、') + b; }
+
+  // 来店の背景の文。選んだものだけを使い、組み合わせ方・言い回し・順番を毎回変える
+  function contextBlock(s, r, polite, size){
+    var all = size === 'long';
+    var ts = '', t1 = '', ws = '';
+    if (s.trigger.length) {
+      var t = shuffle(s.trigger.filter(function(x){ return TRIGGER[x]; }), r); if (!all) t = t.slice(0,1);
+      var tv = t.map(function(x){ return pick(TRIGGER[x].v, r); });
+      ts = joinJa(tv); t1 = tv[0] || '';
+    }
+    if (s.worry.length) {
+      var w = shuffle(s.worry.filter(function(x){ return WORRY[x]; }), r); if (!all) w = w.slice(0,2);
+      ws = w.map(function(x){ return pick(WORRY[x].v, r); }).join(w.length === 2 ? pick(['、','と','や'], r) : '、');
+    }
+    var hasCV = !!(COURSE[s.course] || s.visit);
+    var useT = !!ts && (all || r() < 0.7), useW = !!ws && (all || r() < 0.7), useCV = hasCV && (all || r() < 0.7);
+    if (!useT && !useW && !useCV) { useT = !!ts; useW = !!ws; useCV = hasCV; }
+
+    var go = polite ? ['伺いました','行ってみました','予約しました','利用しました','来てみました'] : ['行ってみた','予約してみた','利用してみた','来てみた'];
+    var parts = [];
+    if (useT && useW && r() < 0.4) {
+      parts.push(ws + pick(['が気になっていて、','が続いていて、'], r) + t1 + '、' + pick(go, r) + '。');
+    } else {
+      if (useT) parts.push(ts + '、' + pick(go, r) + '。');
+      if (useW) parts.push(polite
+        ? pick(['もともと' + ws + 'が気になっていました。', ws + 'が続いていました。', '普段から' + ws + 'が気になっています。', ws + 'に悩んでいました。', '気になっていたのは' + ws + 'です。'], r)
+        : pick(['もともと' + ws + 'が気になっていた。', ws + 'が続いていた。', '普段から' + ws + 'が気になっている。', ws + 'に悩んでいた。'], r));
+    }
+    if (useCV) {
+      var c = COURSE[s.course], C = c ? pick([c.name + '(' + c.min + ')', c.min + 'の' + c.name, c.name], r) : '';
+      var cv;
+      if (C && s.visit === 'first') cv = polite
+        ? ['初めての利用で、' + C + 'を受けました。', '今回が初めてで、' + C + 'をお願いしました。', '初めて伺い、' + C + 'を受けました。', C + 'を受けました。初めての利用です。']
+        : ['初めての利用で、' + C + 'を受けた。', '今回が初めてで、' + C + 'にした。', C + 'を受けた。初めての利用。'];
+      else if (C && s.visit === 'repeat') cv = polite
+        ? ['2回目以降の利用で、今回は' + C + 'でした。', '何度か通っていて、今回は' + C + 'を受けました。', 'リピートで' + C + 'をお願いしました。']
+        : ['2回目以降の利用で、今回は' + C + '。', '何度か通っていて、今回は' + C + 'を受けた。', 'リピートで' + C + 'にした。'];
+      else if (C) cv = polite
+        ? ['今回は' + C + 'を受けました。', C + 'をお願いしました。', '受けたのは' + C + 'です。', C + 'を体験しました。']
+        : ['今回は' + C + '。', C + 'を受けた。', '受けたのは' + C + '。'];
+      else if (s.visit === 'first') cv = polite ? ['初めての利用です。','初めて伺いました。','今回が初めてです。'] : ['初めての利用。','初めて行った。','今回が初めて。'];
+      else cv = polite ? ['2回目以降の利用です。','何度か通っています。','リピートしています。'] : ['2回目以降の利用。','何度か通っている。','リピートしている。'];
+      parts.push(pick(cv, r));
+    }
+    return shuffle(parts, r);
+  }
+
+  // 来店の背景の文がないときに置く、来たことだけを伝えるひとこと(来店回数を選んでいればそれを使う)
+  function visitLine(s, r, polite){
+    if (s.visit === 'first') return pick(polite ? ['初めて伺いました。','初めて利用しました。','初めて行ってきました。','今回が初めての利用です。'] : ['初めて行ってきた。','初めて利用した。','今回が初めて。','初めて行ってみた。'], r);
+    if (s.visit === 'repeat') return pick(polite ? ['また伺いました。','リピートで利用しました。','何度か利用しています。','また行ってきました。'] : ['また行ってきた。','リピートで利用。','何度か利用している。','また行ってみた。'], r);
+    return pick(polite ? ['伺いました。','利用しました。','行ってきました。','体験してきました。','利用させていただきました。'] : ['行ってきた。','利用した。','体験してきた。','行ってみた。','利用してみた。'], r);
+  }
+
+  // 受けてみた感想を選ぶ。長さで数をしぼるのは良かった点だけで、気になった点は必ず残す
+  function feelPick(s, r, polite, size, hasConcern){
+    var k = polite ? 'p' : 'c';
+    var chosen = s.feel.filter(function(x){ return FEEL[x] && !(x === 'n3' && hasConcern); });
+    var pos = shuffle(chosen.filter(function(x){ return !FEEL[x].neg; }), r);
+    var neg = shuffle(chosen.filter(function(x){ return FEEL[x].neg; }), r);
+    var limit = size === 'short' ? 2 : (size === 'normal' ? (r() < 0.5 ? 3 : 4) : pos.length);
+    pos = pos.slice(0, limit);
+    return { keys: pos,
+             pos: pos.map(function(x){ return pick(FEEL[x][k], r); }),
+             neg: neg.map(function(x){ return pick(FEEL[x][k], r); }) };
+  }
+
+  // 感想を文章にする(文章で書く形のとき)。1文ずつの配列で返す
+  function feelSentences(fp, r, polite){
+    var texts = fp.pos.slice();
+    // 体の感覚の文が先頭なら、ときどき前置きを付ける
+    var led = texts.length && FEEL[fp.keys[0]].body && r() < 0.35;
+    if (led) texts[0] = pick(polite ? ['受けてみると、','実際に受けてみて、','施術中は、','体験してみると、','受けている間に、'] : ['受けてみたら、','実際に受けてみて、','施術中は、','体験してみたら、','受けている間に、'], r) + texts[0];
+    // ときどき2つの文を1文につなぐ(前置きを付けた文はつながない)
+    var out = [];
+    for (var i = 0; i < texts.length; i++) {
+      if (i + 1 < texts.length && !(led && i === 0) && r() < 0.3) { out.push(joinShi(texts[i], texts[i + 1], polite)); i++; }
+      else out.push(texts[i]);
+    }
+    // ときどきつなぎの言葉を入れる(同じ言葉はくり返さない)
+    var conn = shuffle(polite ? ['また、','それから、','あと、','さらに、','それと、','それに、','ほかにも、'] : ['あと、','それと、','それから、','それに、','ほかにも、'], r);
+    out = out.map(function(t, j){ return (j > 0 && conn.length && r() < 0.3) ? conn.pop() + t : t; });
+    // 良かった点は、ときどき「！」でしめる(口コミでよくある書き方)
+    out = out.map(function(t){ return t + (r() < 0.2 ? '！' : '。'); });
+    var hadPos = out.length > 0;
+    fp.neg.forEach(function(t, j){
+      if (j === 0 && hadPos && !/^正直/.test(t) && r() < 0.6) t = pick(['ただ、','一方で、','とはいえ、'], r) + t;
+      out.push(t + '。');
+    });
+    return out;
+  }
+
+  function sentences(t){ return t.match(/[^。！？]+[。！？]?/g) || []; }
+  // 文を1〜3文ずつの段落に分ける
+  function chunk(arr, r){
+    var out = [], i = 0;
+    while (i < arr.length) { var q = r(), n = q < 0.5 ? 2 : (q < 0.8 ? 1 : 3); out.push(arr.slice(i, i + n).join('')); i += n; }
+    return out;
+  }
+
+  // 箇条書きの見出しと印
+  var HEADS = [['【よかった点】','【気になった点】'], ['◎よかったところ','△気になったところ'], ['■よかった点','■気になった点'], ['＜よかったところ＞','＜気になったところ＞'], ['よかった点','気になった点'], ['【良かったところ】','【気になったところ】']];
+  var MARKS = [['・','・'], ['・','・'], ['◎','△'], ['○','△'], ['●','●']];
 
   function compose(){
-    var s = state, v = s.seed;
-    var course = s.course || '超音波の温熱ケア';
-    var worry = joinJa(s.worry), trig = joinJa(s.trigger);
-    var p = [];
-    var opens = [
-      (trig ? trig + '、' : '') + '五反田駅から徒歩1分の冷え専門店「お湯のない温泉 ぽかぽか堂」で' + course + 'を受けました。',
-      '五反田の「お湯のない温泉 ぽかぽか堂」へ' + (trig ? '。' + trig + '行ってみました' : '行ってきました') + '。お湯を使わず、超音波で身体を温める冷え専門店で、今回は' + course + 'でした。',
-      (s.visit === 'first' ? '初めて' : '') + '五反田駅近くの冷え専門店「ぽかぽか堂」に行きました。' + (trig ? trig + '選んだお店です。' : '') + course + 'をお願いしました。'
-    ];
-    p.push(opens[v]);
-    var worries = worry ? [
-      'もともと' + worry + 'が気になっていました。',
-      worry + 'がずっと続いていて、温めるケアを試したいと思っていました。',
-      '普段から' + worry + 'に悩んでいたのですが、'
-    ] : null;
-    var f = s.feel.slice(), out = [];
-    if (worries) {
-      if (v === 2) { out.push(worries[2] + (f.length ? f.shift() + '。' : '温めるケアを試してみることにしました。')); }
-      else p.push(worries[v]);
+    var s = state, r = rng(s.seed), polite = s.tone !== 'casual', size = s.dlen || 'normal';
+    var mine = (s.own || '').trim(), worryText = (s.concern || '').trim();
+
+    var ctx = size === 'short' ? [] : contextBlock(s, r, polite, size);
+    var fp = feelPick(s, r, polite, size, !!worryText);
+    var negCount = fp.neg.length + (worryText ? 1 : 0);
+    // 来店の背景の文がないときは、ときどき来たことだけを伝えるひとことを置く
+    if (!ctx.length && (fp.pos.length || fp.neg.length) && r() < 0.5) ctx = [visitLine(s, r, polite)];
+
+    var paras, sep = '\n\n';
+    // 書き方は「文章」か「箇条書き」。箇条書きは項目が2つ以上あるときだけ
+    var bullets = fp.pos.length >= 1 && fp.pos.length + negCount >= 2 && r() < 0.35;
+    if (bullets) {
+      var head = pick(HEADS, r), mark = pick(MARKS, r);
+      var noHead = !negCount && r() < 0.3;
+      var gap = '\n';
+      var good = (noHead ? '' : head[0] + gap) + fp.pos.map(function(t){ return mark[0] + t; }).join(gap);
+      paras = ctx.length ? [ctx.join('')] : [];
+      paras.push(good);
+      if (negCount) {
+        var bad = fp.neg.slice(); if (worryText) bad.push(worryText.replace(/[。．.]+$/, ''));
+        paras.push(head[1] + gap + bad.map(function(t){ return mark[1] + t; }).join(gap));
+      }
+      if (mine) { if (r() < 0.5) paras.unshift(endStop(mine)); else paras.push(endStop(mine)); }
+    } else {
+      // 文章: 1文ごとに段落 / 1〜3文ずつの段落 / 内容のまとまりごとに段落
+      var cs = sentences(ctx.join('')), fs = feelSentences(fp, r, polite);
+      var q = r(), mode = q < 0.35 ? 'each' : (q < 0.75 || fs.length > 4 ? 'chunk' : 'block');
+      var cp = !cs.length ? [] : (mode === 'each' ? cs : (mode === 'chunk' && cs.length > 3 ? chunk(cs, r) : [cs.join('')]));
+      var fpar = !fs.length ? [] : (mode === 'each' ? fs : (mode === 'chunk' ? chunk(fs, r) : [fs.join('')]));
+      // 来店の背景 → 感想の順。ご本人の一言は、書き出し・途中・しめくくりのどこかに入る
+      var first = cp, second = fpar;
+      paras = first.concat(second);
+      var where = r();
+      if (mine) {
+        if (where < 0.55 || !paras.length) paras.unshift(endStop(mine));
+        else if (where < 0.85 || !first.length || !second.length) paras.push(endStop(mine));
+        else paras.splice(first.length, 0, endStop(mine));
+      }
+      if (worryText) paras.push(endStop(worryText));
+      if (r() < 0.45) sep = '\n';
     }
-    while (f.length) {
-      var a = f.shift(), b = f.length ? f.shift() : null;
-      out.push(b ? stem(a) + '、' + b + '。' : a + '。');
-    }
-    if (out.length) p.push(out.join(''));
-    if (s.free && s.free.trim()) p.push(s.free.trim());
-    var closes = [
-      '冷えが気になる方や、仕事帰りに手ぶらで立ち寄りたい方におすすめです。22時まで営業しているのもありがたいです。',
-      (s.visit === 'first' ? '初回は110分4,900円で試せるので、まず一度体験してみる価値があると思います。' : '3週間以内だと特典価格になるので、次もそのペースで通うつもりです。') + '五反田で温活するならここです。',
-      '身体の芯から温まる感覚は、お湯のある温泉とはまた違う心地よさでした。また芯から温まりに行きます。'
-    ];
-    p.push(closes[v]);
-    var any = s.course || s.visit || s.worry.length || s.trigger.length || s.feel.length || (s.free && s.free.trim());
-    var text = p.join('\n').replace(/。(?!\n|$)/g, '。\n').replace(/\n{2,}/g, '\n');
-    draft.value = any ? text : '';
+
+    // 段落のあいだ: 1行あける(sep が空行)か、改行だけ
+    draft.value = paras.join(sep);
+    edited = false; state.manual = '';
     after();
   }
 
   function after(){ len.textContent = draft.value.length; }
-  draft.addEventListener('input', after);
+  draft.addEventListener('input', function(){ edited = true; state.manual = draft.value; after(); save(); });
 
-  restore(); compose(); show(state.step || 1);
+  var keep = state.manual;
+  restore(); compose();
+  if (keep) { draft.value = keep; state.manual = keep; edited = true; after(); }
+  show(state.step || 1);
 })();
 </script>
 
